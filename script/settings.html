@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TOTP 設定</title>
+  </head>
+  <body>
+    <h2>TOTP 設定</h2>
+    <form id="add-form">
+      <p>
+        <label>サイトURL: <input type="text" id="url" required /></label>
+      </p>
+      <p>
+        <label
+          >Secret(Base32): <input type="text" id="secret" required
+        /></label>
+      </p>
+      <p>
+        <label>入力欄ID: <input type="text" id="inputId" required /></label>
+      </p>
+      <button type="submit">追加</button>
+    </form>
+    <hr />
+    <ul id="account-list"></ul>
+    <script src="settings.js"></script>
+  </body>
+</html>
