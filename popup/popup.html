@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <h2>TOTP 一覧</h2>
+    <div id="header">
+      <span id="title">TOTP 一覧</span>
+      <span id="countdown"></span>
+    </div>
+    <hr />
+
     <ul id="totp-list"></ul>
-    <p
-      id="countdown"
-      style="font-size: 0.9em; color: gray; text-align: right"
-    ></p>
     <button id="open-settings">⚙️ 設定</button>
     <script src="popup.js"></script>
   </body>

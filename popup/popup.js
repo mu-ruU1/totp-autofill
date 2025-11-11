@@ -1,7 +1,3 @@
-// popup.js
-
-let intervalId;
-
 document.addEventListener("DOMContentLoaded", () => {
   refreshList();
   startCountdown();
@@ -47,24 +43,31 @@ async function refreshList() {
   }
 }
 
-// ----------------------
+//
 // 残り秒数表示とTOTP更新
-// ----------------------
+let intervalId;
+
 function startCountdown() {
   clearInterval(intervalId);
-  intervalId = setInterval(async () => {
+
+  const updateCountdown = async () => {
     const now = Math.floor(Date.now() / 1000);
     const remaining = 30 - (now % 30);
 
     document.getElementById(
       "countdown"
-    ).textContent = `次の更新まで: ${remaining}s`;
+    ).textContent = `更新まで: ${remaining}s`;
 
     if (remaining === 30) {
-      // 更新タイミング
       refreshCodesOnly();
     }
-  }, 1000);
+  };
+
+  // 最初の1回を即時実行
+  updateCountdown();
+
+  // その後は1秒ごとに更新
+  intervalId = setInterval(updateCountdown, 1000);
 }
 
 async function refreshCodesOnly() {
