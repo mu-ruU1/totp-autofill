@@ -11,21 +11,25 @@ document.addEventListener("DOMContentLoaded", () => {
 // ----------------------
 async function refreshList() {
   const list = document.getElementById("totp-list");
-  list.innerHTML = "";
+  const { accounts = [] } = await chrome.storage.local.get("accounts");
 
-  const { accounts } = await chrome.storage.local.get("accounts");
-  const accountList = accounts || [];
+  list.innerHTML = accounts
+    .map(
+      (acc) => `
+    <li>
+      <span>${acc.url}</span>
+      <code>------</code>
+      <button>コピー</button>
+    </li>
+  `
+    )
+    .join("");
 
-  for (const acc of accountList) {
-    const li = document.createElement("li");
-    const label = document.createElement("span");
-    label.textContent = acc.url;
-
-    const code = document.createElement("code");
-    code.textContent = "------";
-
-    const btn = document.createElement("button");
-    btn.textContent = "コピー";
+  // 各ボタンとコードを設定
+  [...list.querySelectorAll("li")].forEach((li, i) => {
+    const code = li.querySelector("code");
+    const btn = li.querySelector("button");
+    const acc = accounts[i];
 
     // コピー処理
     btn.addEventListener("click", async () => {
@@ -35,12 +39,9 @@ async function refreshList() {
       setTimeout(() => (btn.textContent = "コピー"), 1000);
     });
 
-    li.append(label, code, btn);
-    list.appendChild(li);
-
     // 初回更新
     updateTOTPCode(acc.secret, code);
-  }
+  });
 }
 
 //
