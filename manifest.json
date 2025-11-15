@@ -1,6 +1,6 @@
 {
   "name": "TOTP Autofill",
-  "description": "TOTP Autofill",
+  "description": "TOTP 自動入力拡張機能",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": [
