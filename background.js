@@ -1,5 +1,3 @@
-// background.js
-
 // Base32 → HEX
 function base32ToHex(base32) {
   const base32chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
@@ -45,12 +43,31 @@ async function generateTOTP(secret) {
   return (binary % 10 ** 6).toString().padStart(6, "0");
 }
 
+function urlMatchesDomain(url, domain) {
+  if (!domain) return false;
+
+  domain = domain.trim().toLowerCase();
+
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+
+    // 完全一致
+    if (host === domain) return true;
+
+    // サブドメイン対応
+    // return host.endsWith("." + domain);
+  } catch {
+    return false;
+  }
+}
+
 // content.js からのリクエストを受け取る
 chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   if (req.type === "GET_TOTP_FOR_SITE") {
     chrome.storage.local.get("accounts", async (data) => {
       const accounts = data.accounts || [];
-      const entry = accounts.find((acc) => req.url.includes(acc.url));
+      const entry = accounts.find((acc) => urlMatchesDomain(req.url, acc.url));
       if (!entry) return sendResponse({ otp: null });
 
       const secretHex = base32ToHex(entry.secret);
