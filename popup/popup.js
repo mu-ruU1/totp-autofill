@@ -2,13 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
   refreshList();
   startCountdown();
   document.getElementById("open-settings").addEventListener("click", () => {
-    chrome.tabs.create({ url: chrome.runtime.getURL("script/settings.html") });
+    chrome.tabs.create({
+      url: chrome.runtime.getURL("settings/settings.html"),
+    });
   });
 });
 
-// ----------------------
+//
 // TOTP 一覧の表示
-// ----------------------
 async function refreshList() {
   const list = document.getElementById("totp-list");
   const { accounts = [] } = await chrome.storage.local.get("accounts");
@@ -87,9 +88,8 @@ async function updateTOTPCode(secret, el) {
   el.textContent = otp;
 }
 
-// ----------------------
+//
 // TOTP生成ロジック
-// ----------------------
 function base32ToHex(base32) {
   const base32chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
   let bits = "";

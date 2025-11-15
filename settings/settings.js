@@ -1,4 +1,3 @@
-// settings.js
 async function refreshList() {
   const list = document.getElementById("account-list");
   list.innerHTML = "";
@@ -6,8 +5,9 @@ async function refreshList() {
   const { accounts } = await chrome.storage.local.get("accounts");
   (accounts || []).forEach((acc, index) => {
     const li = document.createElement("li");
-    li.textContent = `${acc.url} (ID: ${acc.inputId})`;
+    li.textContent = `${acc.url} (ID/XPath: ${acc.inputId})`;
     const del = document.createElement("button");
+    del.id = "delete-btn";
     del.textContent = "削除";
     del.addEventListener("click", async () => {
       accounts.splice(index, 1);

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css">
+    <title>TOTP Autofill 設定</title>
+  </head>
+  <body>
+    <h2>TOTP Autofill 設定</h2>
+    <form id="add-form">
+      <!-- サイトドメイン -->
+      <div class="form-row">
+        <label for="url">サイトドメイン名</label>
+        <input type="text" id="url" required />
+        <div class="description">例: example.com や accounts.google.com など</div>
+      </div>
+      <!-- Secret -->
+      <div class="form-row">
+        <label for="secret">Secret (Base32)</label>
+        <input type="text" id="secret" required />
+        <div class="description">Authenticator アプリで表示される Base32 形式のシークレットキー</div>
+      </div>
+      <!-- 入力欄の位置 -->
+      <div class="form-row">
+        <label for="inputId">入力欄 ID / XPath</label>
+        <input type="text" id="inputId" required />
+        <div class="description">TOTP を入力するフォームの element ID または XPath または full XPath</div>
+      </div>
+      <button type="submit">追加</button>
+    </form>
+    <hr />
+    <ul id="account-list"></ul>
+    <script src="settings.js"></script>
+  </body>
+</html>
+</html>
